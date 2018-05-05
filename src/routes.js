@@ -4,7 +4,7 @@
 import { fetchUsersIfNeeded } from './actions/users';
 import { fetchUserIfNeeded } from './actions/user';
 import App from './app';
-import { asyncHome, asyncUserInfo, NotFound } from './pages';
+import { asyncHome, asyncUserInfo, asyncNestUserInfo, NotFound } from './pages';
 
 export default [
   {
@@ -22,7 +22,13 @@ export default [
       {
         path: '/UserInfo/:id',
         component: asyncUserInfo,
-        loadData: ({ params }: Object) => [fetchUserIfNeeded(params.id)]
+        loadData: ({ params }: Object) => [fetchUserIfNeeded(params.id)],
+        routes: [
+          {
+            path: '/UserInfo/:id/NestUserInfo',
+            component: asyncNestUserInfo // <== Add your nested route here
+          }
+        ]
       },
       {
         component: NotFound

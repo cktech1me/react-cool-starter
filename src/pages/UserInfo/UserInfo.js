@@ -3,7 +3,8 @@
 import React, { PureComponent } from 'react';
 import { compose } from 'redux';
 import { connect } from 'react-redux';
-import { withRouter } from 'react-router-dom';
+import { renderRoutes } from 'react-router-config';
+import { Link, withRouter } from 'react-router-dom';
 import Helmet from 'react-helmet';
 
 import * as usersAction from '../../actions/user';
@@ -18,6 +19,7 @@ import styles from './styles.scss';
 type Props = {
   userInfo: UserInfoType,
   match: Object,
+  route: Object,
   fetchUserIfNeeded: (id: string) => void
 };
 
@@ -46,10 +48,17 @@ export class UserInfo extends PureComponent<Props> {
   };
 
   render() {
+    const { match, route } = this.props;
+
     return (
       <div className={styles.UserInfo}>
         <Helmet title="User Info" />
         {this.renderUserCard()}
+        <Link to={`/UserInfo/${match.params.id}/NestUserInfo`}>
+          Go to NestUserInfo
+        </Link>
+        {/* Render your nested route in its parent */}
+        {renderRoutes(route.routes)}
       </div>
     );
   }
